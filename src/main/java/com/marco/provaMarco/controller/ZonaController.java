@@ -43,7 +43,7 @@ public class ZonaController {
     public ResponseEntity<Zona> atualizatVendedor(@RequestBody Zona zona){
         Zona zonaAtualizado = this.consultar(zona.getId());
 
-        zonaAtualizado.setNomeZona(zona.getNomeZona());
+        zonaAtualizado.setName(zona.getName());
 
         return ResponseEntity.status(HttpStatus.OK).body(this.vendedorRepositoty.save(zonaAtualizado));
     }

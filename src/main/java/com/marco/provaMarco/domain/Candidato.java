@@ -16,7 +16,7 @@ public class Candidato {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private int numeroCandidato;
+    private String name;
 
     @ManyToMany
     private List<Secao> secoes;

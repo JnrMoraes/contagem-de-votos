@@ -17,7 +17,7 @@ public class Urna {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private int numeroUrna;
+    private String name;
 
     @ManyToOne
     private Secao secao;

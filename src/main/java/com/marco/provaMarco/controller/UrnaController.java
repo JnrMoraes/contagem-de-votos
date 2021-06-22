@@ -45,7 +45,7 @@ public class UrnaController {
     public Boolean atualizatCarro(@RequestBody com.marco.provaMarco.domain.Urna urna){
         com.marco.provaMarco.domain.Urna urnaAtualizado = this.consultar(urna.getId());
 
-        urnaAtualizado.setNumeroUrna(urna.getNumeroUrna());
+        urnaAtualizado.setName(urna.getName());
 
         this.carroRepository.save(urnaAtualizado);
 

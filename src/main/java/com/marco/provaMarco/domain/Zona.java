@@ -17,7 +17,7 @@ public class Zona {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String nomeZona;
+    private String name;
 
     @OneToMany
     private List<Secao> secoes;

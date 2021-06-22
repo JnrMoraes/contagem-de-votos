@@ -19,7 +19,7 @@ public class Secao {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private int numeroSecao;
+    private String name;
 
     @ManyToOne
     private Zona zona;

@@ -46,7 +46,7 @@ public class SecaoController {
     public Boolean atualizatComprador(@RequestBody Secao secao){
         Secao secaoAtualizado = this.consultar(secao.getId());
 
-        secaoAtualizado.setNumeroSecao(secao.getNumeroSecao());
+        secaoAtualizado.setName(secao.getName());
 
         this.compradorRepository.save(secaoAtualizado);
 
