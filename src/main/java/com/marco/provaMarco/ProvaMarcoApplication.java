@@ -1,13 +1,13 @@
-package com.contagemdevotos.contagemdevotos;
+package com.marco.provaMarco;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ContagemDeVotosApplication {
+public class ProvaMarcoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ContagemDeVotosApplication.class, args);
+		SpringApplication.run(ProvaMarcoApplication.class, args);
 	}
 
 }

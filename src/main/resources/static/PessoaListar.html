@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap 4 Website Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <title>Teste de Serviço</title>
+</head>
+
+<body onload="buscarDados()">
+<h2>Listar Pessoas</h2>
+<div id="listaPessoaId">Carregando...</div>
+
+<a href="VendedotIncluir.html">Incluir Pessoa</a>
+<br /><input type="button" value="Listar" onclick="buscarDados()">
+
+<script>
+
+    function excluirPessoa(id) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                buscarDados();
+            }
+        };
+        xhttp.open("DELETE", "/zona/" + id, true);
+        xhttp.send();
+    }
+
+    function buscarDados() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                exibirPessoasHTML(JSON.parse(this.responseText));
+            }
+        };
+        xhttp.open("GET", "/zona", true);
+        xhttp.send();
+    }
+
+    function exibirPessoas(pessoas) {
+        let texto = "";
+        for (let i = 0; i < pessoas.length; i++) {
+            let p = pessoas[i];
+            texto += p.id + " " + p.nome + " " + p.endereco + " " + p.telefone + "<br>";
+        }
+        listaPessoaId.innerHTML = texto;
+    }
+
+    function exibirPessoasHTML(pessoas) {
+        let texto = '<table class="table table-striped">';
+        for (let i = 0; i < pessoas.length; i++) {
+            let p = pessoas[i];
+            texto += "<tr>";
+            texto += "<td>" + p.id + "</td><td>" + p.nome + "</td><td>" + p.endereco + "</td><td>" + p.telefone + "</td>";
+
+            texto += '<td><a href="javascript:void(0)" onclick="excluirPessoa(' + p.id +')">X</a></td>';
+
+            texto += "</tr>";
+        }
+        texto += "</table>";
+        listaPessoaId.innerHTML = texto;
+    }
+</script>
+</body>
+
+</html>

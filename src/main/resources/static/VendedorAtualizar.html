@@ -1,0 +1,39 @@
+<!DOCTYPE html> JSON
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Teste de Serviço</title>
+</head>
+
+<body>
+<h2>Teste de Serviço</h2>
+<br />Nome: <input id="nome">
+<br />Endereço: <input id="endereco">
+<br />Telefone: <input id="telefone">
+<br /><input type="button" value="Incluir" onclick="enviar()">
+
+<a href="VendedorListar.html">Listar Vendedor</a>
+<script>
+        function enviar() {
+            var obj = { nome: nome.value, endereco: endereco.value, telefone: telefone.value };
+            var json = JSON.stringify(obj);
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    let retorno = JSON.parse(this.responseText);
+                    if (retorno.id != null) {
+                        alert("Incluido com sucesso. ID" + retorno.id);
+                    } else {
+                        alert("Erro ao incluir!");
+                    }
+                }
+            };
+            xhttp.open("POST", "/zona", true);
+            xhttp.setRequestHeader("Content-Type", "application/json");
+            xhttp.send(json);
+        }
+    </script>
+</body>
+
+</html>
