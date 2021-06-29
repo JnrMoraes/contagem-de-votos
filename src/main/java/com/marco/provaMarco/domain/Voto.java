@@ -1,15 +1,13 @@
 package com.marco.provaMarco.domain;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
 public class Voto {
 
-    private Urna urna;
-    private Candidato candidato;
+   private Long id;
+   private Long votar;
 
-//    public void Votar(Urna urna,Candidato candidato){
-//        this.urna.setNomeUrna();
-//    }
 }

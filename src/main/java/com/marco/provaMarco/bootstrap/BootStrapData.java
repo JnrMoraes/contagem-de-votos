@@ -1,30 +1,30 @@
 package com.marco.provaMarco.bootstrap;
 
 import com.marco.provaMarco.domain.Candidato;
+import com.marco.provaMarco.domain.Voto;
 import com.marco.provaMarco.domain.Secao;
 import com.marco.provaMarco.domain.Urna;
 import com.marco.provaMarco.domain.Zona;
-import com.marco.provaMarco.repository.CandidatoRepository;
+import com.marco.provaMarco.repository.ICandidatoRepository;
 import com.marco.provaMarco.repository.ISecaoRepository;
 import com.marco.provaMarco.repository.IUrnaRepository;
 import com.marco.provaMarco.repository.IZonaRepositoty;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.lang.invoke.CallSite;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class BootStrapData implements CommandLineRunner {
 
-    private final CandidatoRepository candidatoRepository;
+    private final ICandidatoRepository candidatoRepository;
     private final ISecaoRepository secaoRepository;
     private final IUrnaRepository urnaRepository;
     private final IZonaRepositoty zonaRepositoty;
 
 
-    public BootStrapData(CandidatoRepository candidatoRepository,
+    public BootStrapData(ICandidatoRepository candidatoRepository,
                          ISecaoRepository secaoRepository,
                          IUrnaRepository urnaRepository,
                          IZonaRepositoty zonaRepositoty) {
@@ -150,7 +150,9 @@ public class BootStrapData implements CommandLineRunner {
 
         //Instancia candidatos
         Candidato candidatoJose = new Candidato("Jose das Neves", totalSecoes,totalZonas, totalUrnas);
+        candidatoJose.setQuantidadeVotos(11);
         Candidato candidatoManoel = new Candidato("Manoel dos Campos", totalSecoes,totalZonas, totalUrnas);
+        candidatoManoel.setQuantidadeVotos(31);
         candidatoRepository.save(candidatoJose);
         candidatoRepository.save(candidatoManoel);
 
@@ -197,6 +199,27 @@ public class BootStrapData implements CommandLineRunner {
         System.out.println( "Zonas: " + zonaRepositoty.count());
         System.out.println( "Seções: " + secaoRepository.count());
         System.out.println( "Urnas: " + urnaRepository.count());
+        System.out.println("Votos por candidato Jose das Neves: " + candidatoRepository
+                                                            .findByName("Jose das Neves").getQuantidadeVotos());
+        System.out.println("Votos por candidato Manoel dos Campos: " + candidatoRepository
+                                                            .findByName("Manoel dos Campos").getQuantidadeVotos());
+
+        Voto voto = new Voto();
+
+        System.out.println("Votos totais na Secao Leste 1 " +
+                QuantidadeVotosPorSecao("Secao Leste 1"));
+
+        System.out.println("Votos totais na Secao Leste 2 " +
+                QuantidadeVotosPorSecao("Secao Leste 2"));
 
     }
+    private Integer QuantidadeVotosPorSecao(String candidato) {
+
+        List<Candidato> candidatosList = this.secaoRepository.findByName(candidato).getCandidatos();
+        Integer candidatoVotos = candidatosList.stream()
+                .map(Candidato::getQuantidadeVotos)
+                .reduce(0, Integer::sum);
+        return  candidatoVotos;
+    }
+
 }

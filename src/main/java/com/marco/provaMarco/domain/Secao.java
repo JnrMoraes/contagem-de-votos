@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,7 +14,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import java.util.List;
 
 @Entity
@@ -28,7 +26,7 @@ public class Secao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nomeSecao;
+    private String name;
 
     @OneToMany(mappedBy = "secao")
     private List<Urna> urnas;
@@ -36,7 +34,7 @@ public class Secao {
     @ManyToOne(fetch = FetchType.LAZY)
     private Zona zona;
 
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(
             name = "secao_has_candidato",
             joinColumns = { @JoinColumn(name = "secao_id") },
@@ -44,8 +42,8 @@ public class Secao {
     )
     private List<Candidato> candidatos;
 
-    public Secao(String nomeSecao, List<Urna> urnas) {
-        this.nomeSecao = nomeSecao;
+    public Secao(String name, List<Urna> urnas) {
+        this.name = name;
         this.urnas = urnas;
     }
 }
