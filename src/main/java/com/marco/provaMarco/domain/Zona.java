@@ -1,31 +1,53 @@
 package com.marco.provaMarco.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Zona {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
 
-    @OneToMany
+    private String nomeZona;
+
+    @OneToMany(mappedBy = "zona")
     private List<Secao> secoes;
 
-    @OneToMany
+    @ManyToMany(mappedBy = "zona")
     private List<Urna> urnas;
 
-    @ManyToMany(mappedBy = "zonas")
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "zona_has_candidato",
+            joinColumns = { @JoinColumn(name = "zona_id") },
+            inverseJoinColumns = { @JoinColumn(name = "candidato_id") }
+    )
     private List<Candidato> candidatos;
 
+    public Zona(String nomeZona, List<Secao> secoes, List<Urna> urnas) {
+        this.nomeZona = nomeZona;
+        this.secoes = secoes;
+        this.urnas = urnas;
+    }
 }

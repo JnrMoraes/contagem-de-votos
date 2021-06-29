@@ -3,20 +3,20 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Teste de Serviço</title>
+    <title>Teste Incluir de Zona</title>
 </head>
 
 <body>
-<h2>Teste de Serviço</h2>
-<br />Nome: <input id="nome">
-<br />Urnas: <input id="urnas">
-<br />Candidatos: <input id="candidatos">
-<br /><input type="button" value="Incluir" onclick="enviar()">
-<br /><input type="button" value="Listar" onclick="exibirPessoasHTML()">
-<a href="PessoaListar.html">Listar Vendedor</a>
+<h2>Teste de Zona</h2>
+<!--<br />Zona: <input id="name">-->
+<br />Zona: <input id="blz">
+
+<br /><input type="button" value="Incluir Zona" onclick="enviar()">
+<!--<br /><input type="button" value="Listar" onclick="exibirPessoasHTML()">-->
+<!--<a href="PessoaListar.html">Listar Vendedor</a>-->
 <script>
-        function enviar() {
-            var obj = { nome: nome.value, urnas: urnas.value, candidatos: candidatos.value };
+       function enviar() {
+            var obj = {nomeZona:blz.value, secoes: [], urnas:[], candidatos:[] };
             var json = JSON.stringify(obj);
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {

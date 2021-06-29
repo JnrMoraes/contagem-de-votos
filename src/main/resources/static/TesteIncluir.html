@@ -1,0 +1,80 @@
+<!DOCTYPE html> JSON
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Teste de Serviço</title>
+</head>
+
+<body onload="buscarDados()">
+<h2>Incluir Secao na urna</h2>
+<!--<div id="listaPessoaId">Carregando...</div>-->
+<br />Zona: <input id="nomeZona">
+<br />Zona: <input id="nomeSecao">
+<br /><input type="button" value="Incluir Zona" onclick="enviar()">
+<!--<a href="VendedotIncluir.html">Incluir Pessoa</a>-->
+<br /><input type="button" value="Listar" onclick="buscarDados()">
+
+<script>
+
+    function buscarDados(nomeZona, nomeSecao) {
+
+    var objZona = {nomeZona:nomeZona.value};
+    var objSecao = {nomeSecao: nomeSecao.value};
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                exibirPessoasHTML(JSON.parse(this.responseText));
+            }
+        };
+        xhttp.open("GET", "/zona/" + nomeZona + "/" + "nomeSecao", true);
+        xhttp.send();
+    }
+
+    function enviar() {
+            var obj = {nomeZona:blz.value, secoes: [], urnas:[], candidatos:[] };
+            var json = JSON.stringify(obj);
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    let retorno = JSON.parse(this.responseText);
+                    if (retorno.id != null) {
+                        alert("Incluido com sucesso. ID" + retorno.id);
+                    } else {
+                        alert("Erro ao incluir!");
+                    }
+                }
+            };
+            xhttp.open("POST", "/zona", true);
+            xhttp.setRequestHeader("Content-Type", "application/json");
+            xhttp.send(json);
+        }
+
+    function exibirZona(zona) {
+        let texto = "";
+        for (let i = 0; i < pessoas.length; i++) {
+            let p = pessoas[i];
+            texto += p.id + " " + p.nomeZona + " " + p.endereco + " " + p.telefone + "<br>";
+        }
+        listaPessoaId.innerHTML = texto;
+    }
+
+    function exibirPessoasHTML(pessoas) {
+        let texto = '<table class="table table-striped">';
+        for (let i = 0; i < pessoas.length; i++) {
+            let p = pessoas[i];
+            texto += "<tr>";
+            texto += "<td>" + p.id + "</td><td>" + p.nome + "</td><td>" + p.endereco + "</td><td>" + p.telefone + "</td>";
+
+            texto += '<td><a href="javascript:void(0)" onclick="excluirPessoa(' + p.id +')">X</a></td>';
+
+            texto += "</tr>";
+        }
+        texto += "</table>";
+        listaPessoaId.innerHTML = texto;
+    }
+</script>
+</body>
+
+</html>

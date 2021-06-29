@@ -3,20 +3,18 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Teste de Serviço</title>
+    <title>Teste Incluir Secao</title>
 </head>
 
 <body>
-<h2>Teste de Serviço</h2>
-<br />Nome: <input id="nome">
-<br />Urnas: <input id="urnas">
-<br />Candidatos: <input id="candidatos">
+<h2>Incluir Secao</h2>
+<br />Zona: <input id="nomeSecao">
 <br /><input type="button" value="Incluir" onclick="enviar()">
-<br /><input type="button" value="Listar" onclick="exibirPessoasHTML()">
-<a href="PessoaListar.html">Listar Vendedor</a>
+<!--<br /><input type="button" value="Listar" onclick="exibirPessoasHTML()">-->
+<!--<a href="PessoaListar.html">Listar Vendedor</a>-->
 <script>
         function enviar() {
-            var obj = { nome: nome.value, urnas: urnas.value, candidatos: candidatos.value };
+            var obj = { nomeSecao: nomeSecao.value };
             var json = JSON.stringify(obj);
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
@@ -29,7 +27,7 @@
                     }
                 }
             };
-            xhttp.open("POST", "/zona", true);
+            xhttp.open("POST", "/secao", true);
             xhttp.setRequestHeader("Content-Type", "application/json");
             xhttp.send(json);
         }
