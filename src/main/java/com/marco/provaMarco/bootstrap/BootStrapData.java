@@ -222,4 +222,8 @@ public class BootStrapData implements CommandLineRunner {
         return  candidatoVotos;
     }
 
+    private void votar( Voto voto ){
+
+    }
+
 }
