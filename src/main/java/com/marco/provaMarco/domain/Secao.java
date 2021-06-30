@@ -5,16 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import java.util.List;
+import javax.persistence.OneToOne;
 
 @Entity
 @Data
@@ -28,22 +22,17 @@ public class Secao {
 
     private String name;
 
-    @OneToMany(mappedBy = "secao")
-    private List<Urna> urnas;
+    @OneToOne
+    private Urna urna;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne
     private Zona zona;
 
-    @ManyToMany(fetch=FetchType.EAGER)
-    @JoinTable(
-            name = "secao_has_candidato",
-            joinColumns = { @JoinColumn(name = "secao_id") },
-            inverseJoinColumns = { @JoinColumn(name = "candidato_id") }
-    )
-    private List<Candidato> candidatos;
+    @OneToOne
+    private Candidato candidato;
 
-    public Secao(String name, List<Urna> urnas) {
+    public Secao(String name, Urna urna) {
         this.name = name;
-        this.urnas = urnas;
+        this.urna = urna;
     }
 }

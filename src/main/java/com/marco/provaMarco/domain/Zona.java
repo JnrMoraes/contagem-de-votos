@@ -4,16 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import java.util.List;
+import javax.persistence.OneToOne;
 
 @Entity
 @Data
@@ -27,23 +22,18 @@ public class Zona {
 
     private String nomeZona;
 
-    @OneToMany(mappedBy = "zona")
-    private List<Secao> secoes;
+    @OneToOne
+    private Secao secao;
 
-    @ManyToMany(mappedBy = "zona")
-    private List<Urna> urnas;
+    @OneToOne
+    private Urna urna;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-            name = "zona_has_candidato",
-            joinColumns = { @JoinColumn(name = "zona_id") },
-            inverseJoinColumns = { @JoinColumn(name = "candidato_id") }
-    )
-    private List<Candidato> candidatos;
+    @OneToOne
+    private Candidato candidato;
 
-    public Zona(String nomeZona, List<Secao> secoes, List<Urna> urnas) {
+    public Zona(String nomeZona, Secao secao, Urna urna) {
         this.nomeZona = nomeZona;
-        this.secoes = secoes;
-        this.urnas = urnas;
+        this.secao = secao;
+        this.urna = urna;
     }
 }

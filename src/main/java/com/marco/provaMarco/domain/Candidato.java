@@ -5,40 +5,37 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import java.util.List;
+import javax.persistence.OneToOne;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Candidato {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
-    private int quantidadeVotos;
+    private Long quantidadeVotos = 0L;
 
-    @OneToMany(mappedBy = "candidatos",  fetch= FetchType.EAGER)
-    private List<Secao> secoes;
+    @OneToOne
+    private Secao secao;
 
-    @ManyToMany(mappedBy = "candidatos")
-    private List<Zona> zonas;
+    @OneToOne
+    private Zona zona;
 
-    @ManyToMany(mappedBy = "candidatos")
-    private List<Urna> urnas;
+    @OneToOne
+    private Urna urna;
 
-    public Candidato(String name, List<Secao> secoes, List<Zona> zonas, List<Urna> urnas) {
+    public Candidato(String name) {
         this.name = name;
-        this.secoes = secoes;
-        this.zonas = zonas;
-        this.urnas = urnas;
+    }
+
+    public void setQuantidadeVotos(Long quantidadeVotos) {
+        this.quantidadeVotos = this.quantidadeVotos + quantidadeVotos;
     }
 }
