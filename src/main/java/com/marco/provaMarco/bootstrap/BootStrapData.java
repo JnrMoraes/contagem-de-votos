@@ -202,7 +202,8 @@ public class BootStrapData implements CommandLineRunner {
         System.out.println("Votos por candidato Jose das Neves: " + candidatoRepository
                                                             .findByName("Jose das Neves").getQuantidadeVotos());
         System.out.println("Votos por candidato Manoel dos Campos: " + candidatoRepository
-                                                            .findByName("Manoel dos Campos").getQuantidadeVotos());
+                                                            .findByName("Manoel dos Campos")
+                                                            .getQuantidadeVotos());
 
         Voto voto = new Voto();
 
