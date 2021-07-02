@@ -13,16 +13,132 @@
 </head>
 
 <body onload="buscarDados()">
-<h2>Total Votos</h2>
+<h2>Apuração dos votos</h2>
 
     <div class="input-container">
-        Quantidade de Candidatos: <input class="input" id="saidaCandidatos"><br />
-        <button onclick="buscarDados()">Listar</button>
+        Total de votos candidato Jose das Neves: </br> <input class="input" id="saidaJose"><br />
+<!--        <button onclick="buscarJose()">Listar</button>-->
+    </div>
+    <div class="input-container">
+        Total de votos  candidato Manoel dos Campos: </br> <input class="input" id="saidaManoel"><br />
+<!--        <button onclick="buscarJose()">Listar</button>-->
+    </div>
+    <div class="input-container">
+        Total de votos  na Zona Leste: </br> <input class="input" id="saidaZonaLeste"><br />
+<!--        <button onclick="buscarJose()">Listar</button>-->
+    </div>
+    <div class="input-container">
+        Total de votos  na Seção: </br> <input class="input" id="saidaSecaoLeste"><br />
+<!--        <button onclick="buscarJose()">Listar</button>-->
+    </div>
+    <div class="input-container">
+        Total de votos  na urna zona Leste 1: </br> <input class="input" id="saidaUrnaLeste"><br />
+<!--        <button onclick="buscarJose()">Listar</button>-->
     </div>
 
-
+    <div class="input-container">
+         Total dos Votos: </br> <input class="input" id="saidaCandidatos"><br />
+    </div>
+</br></br>
+<button onclick="buscarDados()">Listar</button>
 <script>
-    function buscarDados() {
+
+function buscarDados(){
+buscarJose()
+buscarManoel()
+buscarZonaLeste()
+buscarSecaoLeste()
+buscarUrnaLeste()
+buscarCandidatoTotal()
+}
+
+<!--Buscar total votos Jose das Neves-->
+    function buscarJose() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                exibirQuantidadeVotoJose(JSON.parse(this.responseText));
+            }
+        };
+        xhttp.open("GET", "/candidato/jose", true);
+        xhttp.send();
+    }
+    function exibirQuantidadeVotoJose(valor) {
+        let resultado = valor;
+        let resultadoTotal = document.getElementById('saidaJose')
+        resultadoTotal.value = resultado
+    }
+
+ <!--Buscar total votos Manoel dos Campos-->
+    function buscarManoel() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                exibirQuantidadeVotoManoel(JSON.parse(this.responseText));
+            }
+        };
+        xhttp.open("GET", "/candidato/manoel", true);
+        xhttp.send();
+    }
+    function exibirQuantidadeVotoManoel(valor) {
+        let resultado = valor;
+        let resultadoTotal = document.getElementById('saidaManoel')
+        resultadoTotal.value = resultado
+    }
+
+<!--Buscar total votos Zona Leste-->
+    function buscarZonaLeste() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                exibirQuantidadeVotoZonaLeste(JSON.parse(this.responseText));
+            }
+        };
+        xhttp.open("GET", "/zona/leste", true);
+        xhttp.send();
+    }
+    function exibirQuantidadeVotoZonaLeste(valor) {
+        let resultado = valor;
+        let resultadoTotal = document.getElementById('saidaZonaLeste')
+        resultadoTotal.value = resultado
+    }
+
+<!--Buscar total votos Zona Leste-->
+    function buscarSecaoLeste() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                exibirQuantidadeVotoZonaLeste(JSON.parse(this.responseText));
+            }
+        };
+        xhttp.open("GET", "/secao/total", true);
+        xhttp.send();
+    }
+    function exibirQuantidadeVotoZonaLeste(valor) {
+        let resultado = valor;
+        let resultadoTotal = document.getElementById('saidaSecaoLeste')
+        resultadoTotal.value = resultado
+    }
+
+<!--Buscar total votos Urna Leste-->
+    function buscarUrnaLeste() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                exibirQuantidadeVotoUrnaLeste(JSON.parse(this.responseText));
+            }
+        };
+        xhttp.open("GET", "/urna/total", true);
+        xhttp.send();
+    }
+    function exibirQuantidadeVotoUrnaLeste(valor) {
+        let resultado = valor;
+        let resultadoTotal = document.getElementById('saidaUrnaLeste')
+        resultadoTotal.value = resultado
+    }
+
+<!-- Buscar total de Candidatos-->
+    function buscarCandidatoTotal() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
@@ -32,7 +148,6 @@
         xhttp.open("GET", "/candidato/total", true);
         xhttp.send();
     }
-
     function exibirQuantidadeTotalCandidatos(valor) {
         let resultado = valor;
         let resultadoTotal = document.getElementById('saidaCandidatos')
